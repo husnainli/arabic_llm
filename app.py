@@ -107,17 +107,10 @@ if uploaded_file:
             retrieved_docs = retrieve_similar_chunks(vectorstore, user_input, k=4)
             context = "\n\n".join(doc.page_content for doc in retrieved_docs)
 
-            # prompt = (
-            #     f"السؤال:\n{user_input}\n\n"
-            #     f"محتوى الوثيقة:\n{context}\n\n"
-            #     "الرجاء تقديم إجابة دقيقة استنادًا إلى محتوى الوثيقة."
-            # )
             prompt = (
                 f"السؤال:\n{user_input}\n\n"
                 f"محتوى الوثيقة:\n{context}\n\n"
-                "الرجاء تقديم إجابة دقيقة ومتكاملة استنادًا فقط إلى محتوى الوثيقة أعلاه.\n"
-                "أجب باللغة العربية الفصحى فقط، دون استخدام أي كلمات أو أحرف من لغات أخرى.\n"
-                "احرص على أن تكون الجمل سليمة لغويًا وواضحة.\n"
+                "الرجاء تقديم إجابة دقيقة استنادًا إلى محتوى الوثيقة."
             )
 
             response = query_llama3(prompt)
