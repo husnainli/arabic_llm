@@ -6,13 +6,13 @@ langdetect                  # Detect input language
 python-dotenv               # Load .env configs
 
 # --- LangChain Ecosystem ---
-langchain>=0.1.0            # Core LangChain (use newer versions)
-langchain-community         # Required for Chroma + Embedding integrations
-langchain-text-splitters    # Splitters like RecursiveCharacterTextSplitter
+langchain>=0.1.0            # Core LangChain
+langchain-community         # Required for FAISS
+langchain-text-splitters    # Text chunking
 
 # --- Vector Store & Embeddings ---
-chromadb                    # Vector DB used in your project
-sentence-transformers       # Needed by HuggingFaceEmbeddings
+faiss-cpu                   # ✅ FAISS replaces Chroma
+sentence-transformers       # Used by HuggingFaceEmbeddings
 
 # --- OpenAI Integration ---
 openai                      # For using LLaMA3 or OpenAI models
@@ -21,4 +21,4 @@ openai                      # For using LLaMA3 or OpenAI models
 googletrans==4.0.0-rc1      # Google Translate wrapper
 
 # --- Compatibility Fixes ---
-pydantic<2.0                # Required by langchain or legacy tools
+pydantic<2.0                # For langchain and legacy deps
