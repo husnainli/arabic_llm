@@ -16,7 +16,7 @@ def embed_chunks(chunks, persist_dir="chroma_db", model_name='intfloat/multiling
 
     # Ensure reproducible index
     if os.path.exists(persist_dir):
-        vectorstore = Chroma(persist_directory=persist_dir, embedding_function=embedding)
+        vectorstore = Chroma(embedding_function=embedding)
     else:
         vectorstore = Chroma.from_texts(chunks, embedding=embedding, persist_directory=persist_dir)
         vectorstore.persist()
