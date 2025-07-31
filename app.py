@@ -5,6 +5,7 @@ import re
 from utils.embeddings import chunk_text, embed_chunks, retrieve_similar_chunks
 from utils.llm import query_llama3
 from utils.translate import translate_text
+from utils.jais_llm import query_jais
 
 # -------------------------------
 # 🧼 Arabic Text Cleaning Utility
@@ -32,6 +33,10 @@ def extract_text_from_pdf(pdf_file):
 
 def sanitize_for_translation(text):
     return text.replace('\n', ' ').strip()
+
+@st.cache_resource(show_spinner=False)
+def get_vectorstore(chunks):
+    return embed_chunks(chunks)
 
 # -------------------------------
 # 🚀 Streamlit App Initialization
@@ -73,7 +78,7 @@ if uploaded_file:
 
     # 🧠 Generate and store embeddings
     with st.spinner("🧠 Embedding text and storing in vector DB..."):
-        vectorstore = embed_chunks(chunks)
+        vectorstore = get_vectorstore(chunks)
         # st.success("✅ Embeddings successfully stored!")
 
     # # 🔍 Simulated retrieval preview
@@ -104,16 +109,22 @@ if uploaded_file:
 
         # Retrieve relevant document chunks
         with st.spinner("🤖 Generating response using LLaMA 3..."):
-            retrieved_docs = retrieve_similar_chunks(vectorstore, user_input, k=4)
+            retrieved_docs = retrieve_similar_chunks(vectorstore, user_input, k=6)
             context = "\n\n".join(doc.page_content for doc in retrieved_docs)
+            # context = "\n\n".join(clean_arabic_text(doc.page_content) for doc in retrieved_docs)
+
+            print(context)
 
             prompt = (
                 f"السؤال:\n{user_input}\n\n"
                 f"محتوى الوثيقة:\n{context}\n\n"
-                "الرجاء تقديم إجابة دقيقة استنادًا إلى محتوى الوثيقة."
+                "أجب إجابة كاملة وشاملة مستندًا فقط إلى محتوى الوثيقة أعلاه."
+                "يجب أن تكون إجابتك باللغة العربية الفصحى فقط دون أي كلمات إنجليزية أو لغات أخرى."
+                "إذا لم يكن هناك معلومات كافية، قل ذلك بالعربية فقط دون تأليف."
             )
 
             response = query_llama3(prompt)
+            # response = query_jais(prompt)
 
         response_key = f"translated_response_{len(st.session_state.messages)}"
 

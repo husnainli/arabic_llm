@@ -3,8 +3,9 @@ import requests
 TOGETHER_API_KEY = "6866d79687419256304972259a77b271650459b8d0b22bae21fd59d4265066d4"
 
 system_prompt = (
-    "أنت مساعد ذكي ومتعدد اللغات، ولكن يجب عليك دائمًا الرد باللغة العربية فقط.\n"
-    "يُمنع منعًا باتًا استخدام أو خلط أي كلمات من لغات أخرى.\n"
+    "أنت مساعد ذكي يتحدث العربية فقط، وتفهم الوثائق والمحتوى باللغة العربية.\n"
+    "يُمنع منعًا باتًا استخدام أي كلمات إنجليزية أو من لغات أخرى في ردودك.\n"
+    "يجب أن تكون كل الإجابات باللغة العربية الفصحى وبشكل رسمي وواضح."
 )
 
 def query_llama3(prompt, system_prompt=system_prompt):
@@ -20,7 +21,7 @@ def query_llama3(prompt, system_prompt=system_prompt):
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": prompt}
         ],
-        "temperature": 0.7,
+        "temperature": 0.2,
         "max_tokens": 1024
     }
 
