@@ -36,8 +36,8 @@ def sanitize_for_translation(text):
 # -------------------------------
 # 🚀 Streamlit App Initialization
 # -------------------------------
-st.set_page_config(page_title="📚 Arabic PDF Chatbot", layout="wide")
-st.title("🤖 Arabic PDF Chatbot")
+st.set_page_config(page_title="📚 EduVision AI", layout="wide")
+st.title("🤖 EduVision AI")
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -51,38 +51,38 @@ uploaded_file = st.file_uploader("📤 Upload an Arabic PDF", type=["pdf"])
 if uploaded_file:
     st.success("✅ PDF uploaded successfully!")
 
-    # ✅ Test translation call (for debug)
-    with st.spinner("🌐 Testing translation function..."):
-        test_text = "محتوى الوثيقة هو سرد تاريخي عن الدولة السعودية، والذكرى لملك عبد العزيز بن عبد الرحمن الفيصل، والشخصية السعودية محمد بن سعود الملقب بالمغفور له."
-        translation_result = translate_text(test_text)
-        st.markdown("🔁 **Test Translation Result:**")
-        st.markdown(f"📘 Original Arabic: `{test_text}`")
-        st.markdown(f"📗 English Translation: `{translation_result}`")
+    # # ✅ Test translation call (for debug)
+    # with st.spinner("🌐 Testing translation function..."):
+    #     test_text = "محتوى الوثيقة هو سرد تاريخي عن الدولة السعودية، والذكرى لملك عبد العزيز بن عبد الرحمن الفيصل، والشخصية السعودية محمد بن سعود الملقب بالمغفور له."
+    #     translation_result = translate_text(test_text)
+    #     st.markdown("🔁 **Test Translation Result:**")
+    #     st.markdown(f"📘 Original Arabic: `{test_text}`")
+    #     st.markdown(f"📗 English Translation: `{translation_result}`")
 
     # 🔍 Extract and clean text
     with st.spinner("🧼 Extracting and cleaning text..."):
         pdf_text = extract_text_from_pdf(uploaded_file)
 
-    with st.expander("📖 Preview Cleaned Text"):
-        st.text_area("First 2000 characters of cleaned text:", value=pdf_text[:2000], height=300)
+    # with st.expander("📖 Preview Cleaned Text"):
+    #     st.text_area("First 2000 characters of cleaned text:", value=pdf_text[:2000], height=300)
 
     # 🔄 Split into chunks
     with st.spinner("🔄 Splitting text into chunks..."):
         chunks = chunk_text(pdf_text)
-        st.write(f"🔹 Total Chunks Created: {len(chunks)}")
+        # st.write(f"🔹 Total Chunks Created: {len(chunks)}")
 
     # 🧠 Generate and store embeddings
     with st.spinner("🧠 Embedding text and storing in vector DB..."):
         vectorstore = embed_chunks(chunks)
-        st.success("✅ Embeddings successfully stored!")
+        # st.success("✅ Embeddings successfully stored!")
 
-    # 🔍 Simulated retrieval preview
-    with st.expander("🧠 Example Retrieval"):
-        sample_query = "ما هو موضوع الوثيقة؟"
-        st.write(f"🔍 Example Query: `{sample_query}`")
-        docs = vectorstore.similarity_search(sample_query, k=4)
-        for i, doc in enumerate(docs, 1):
-            st.markdown(f"**Document {i}:**\n{doc.page_content[:500]}")
+    # # 🔍 Simulated retrieval preview
+    # with st.expander("🧠 Example Retrieval"):
+    #     sample_query = "ما هو موضوع الوثيقة؟"
+    #     st.write(f"🔍 Example Query: `{sample_query}`")
+    #     docs = vectorstore.similarity_search(sample_query, k=4)
+    #     for i, doc in enumerate(docs, 1):
+    #         st.markdown(f"**Document {i}:**\n{doc.page_content[:500]}")
 
     # ---------------------------------
     # 💬 Interactive Q&A Chat Interface
