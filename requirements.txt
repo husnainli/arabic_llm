@@ -4,6 +4,7 @@ deep-translator
 langdetect
 python-dotenv
 langchain
+langchain-community
 chromadb
 
 # Core libraries
