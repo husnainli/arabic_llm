@@ -4,3 +4,4 @@ deep-translator
 langdetect
 python-dotenv
 langchain
+chromadb
