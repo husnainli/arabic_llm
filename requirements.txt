@@ -1,0 +1,5 @@
+streamlit
+PyMuPDF  # for PDF extraction
+deep-translator
+langdetect
+python-dotenv
