@@ -1,18 +1,24 @@
+# --- Core App Libraries ---
 streamlit
-PyMuPDF  # for PDF extraction
-deep-translator
-langdetect
-python-dotenv
-langchain
-langchain-community
-chromadb
+PyMuPDF                     # For PDF extraction
+deep-translator             # Backup translation lib
+langdetect                  # Detect input language
+python-dotenv               # Load .env configs
 
-# Core libraries
-openai
-PyMuPDF
+# --- LangChain Ecosystem ---
+langchain>=0.1.0            # Core LangChain (use newer versions)
+langchain-community         # Required for Chroma + Embedding integrations
+langchain-text-splitters    # Splitters like RecursiveCharacterTextSplitter
 
-# Translation support
-googletrans==4.0.0-rc1
+# --- Vector Store & Embeddings ---
+chromadb                    # Vector DB used in your project
+sentence-transformers       # Needed by HuggingFaceEmbeddings
 
-# Optional but often required
-pydantic<2.0
+# --- OpenAI Integration ---
+openai                      # For using LLaMA3 or OpenAI models
+
+# --- Translation Support ---
+googletrans==4.0.0-rc1      # Google Translate wrapper
+
+# --- Compatibility Fixes ---
+pydantic<2.0                # Required by langchain or legacy tools
